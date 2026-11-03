@@ -5,6 +5,7 @@ import app.repository.UsuarioRepositoryImpl;
 import app.service.UsuarioServiceImpl;
 import app.service.inputports.UsuarioUseCase;
 import app.service.outputports.UsuarioRepositoryInterface;
+import app.view.CarritoView;
 import app.view.UsuarioView;
 import app.utils.FormRuleValidator;
 
@@ -13,6 +14,7 @@ public class AppUserInterface {
     UsuarioRepositoryInterface usuarioRepositoryInterface = new UsuarioRepositoryImpl();
     UsuarioUseCase usuarioUseCase = new UsuarioServiceImpl(usuarioRepositoryInterface);
     UsuarioView usuarioView = new UsuarioView(usuarioUseCase);
+    CarritoView carritoView = new CarritoView();
 
     public void startApp() {
 
@@ -54,6 +56,10 @@ public class AppUserInterface {
                     usuarioView.showMessage("Product bought.");
                     break;
 
+                case 6:
+                    carritoView.mostrarMenu();
+                    break;
+
                 case 0:
                     System.out.println("Exit...");
                     break;
@@ -70,6 +76,7 @@ public class AppUserInterface {
         System.out.println("3. Sell Product");
         System.out.println("4. Publish Product");
         System.out.println("5. Buy Product");
+        System.out.println("6. Shopping Cart");
         System.out.println("0. Exit");
     }
 }
