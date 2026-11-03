@@ -1,39 +1,15 @@
 package app.utils;
 
-<<<<<<< HEAD
-=======
-import app.repository.UsuarioRepositoryImpl;
-
->>>>>>> 50c9d38602c8a1e449437fdd0a906df001cbd04b
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class FormRuleValidator {
 
-<<<<<<< HEAD
-    static Scanner sc = new Scanner(System.in);
-=======
-    private UsuarioRepositoryImpl usuarioRepositoryImpl;
-    public FormRuleValidator(UsuarioRepositoryImpl usuarioRepositoryImpl){
-        this.usuarioRepositoryImpl = usuarioRepositoryImpl;
-    }
-
-    private static final Scanner sc =
-            new Scanner(System.in);
->>>>>>> 50c9d38602c8a1e449437fdd0a906df001cbd04b
+    private static final Scanner sc = new Scanner(System.in);
 
     public static int validateInt(String prompt) {
 
         while (true) {
-<<<<<<< HEAD
-            try {
-                System.out.println(prompt);
-                int value = sc.nextInt();
-                sc.nextLine();
-                return value;
-            } catch (InputMismatchException e) {
-                System.out.println("Error: Ingrese un número válido. " + e.getMessage());
-=======
 
             try {
 
@@ -49,43 +25,11 @@ public class FormRuleValidator {
                 System.out.println(
                         "Invalid integer value.");
 
->>>>>>> 50c9d38602c8a1e449437fdd0a906df001cbd04b
                 sc.nextLine();
             }
         }
     }
 
-<<<<<<< HEAD
-    public static Double validateDouble(String prompt) {
-
-        while (true) {
-            try {
-                System.out.println(prompt);
-                Double value = sc.nextDouble();
-                sc.nextLine();
-                return value;
-
-            } catch (InputMismatchException e) {
-                System.out.println("Error: Ingrese un número decimal válido." + e.getMessage());
-                sc.nextLine(); // Limpiar el buffer del scanner
-            }
-        }
-
-    }
-
-    public static Boolean validateBoolean(String prompt) {
-
-        while (true) {
-            try {
-                System.out.println(prompt);
-                Boolean value = sc.nextBoolean();
-                sc.nextLine();
-                return value;
-
-            } catch (InputMismatchException e) {
-                System.out.println("Error: Ingrese un valor Booleano valido." + e.getMessage());
-                sc.nextLine(); // Limpiar el buffer del scanner
-=======
     public static double validateDouble(
             String prompt) {
 
@@ -106,27 +50,10 @@ public class FormRuleValidator {
                         "Invalid decimal value.");
 
                 sc.nextLine();
->>>>>>> 50c9d38602c8a1e449437fdd0a906df001cbd04b
             }
         }
     }
 
-<<<<<<< HEAD
-
-    public static String validateString(String prompt) {
-
-        while (true) {
-            System.out.println(prompt);
-            String value = sc.nextLine().trim();
-            if (!value.isEmpty()) {
-                return value;
-            } else {
-                System.out.println("Error: Ingrese un valor de texto válido.");
-            }
-        }
-    }
-}
-=======
     public static String validateString(
             String prompt) {
 
@@ -236,4 +163,3 @@ public class FormRuleValidator {
         }
     }
 }
->>>>>>> 50c9d38602c8a1e449437fdd0a906df001cbd04b
