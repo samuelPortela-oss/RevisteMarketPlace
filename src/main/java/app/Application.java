@@ -1,7 +1,6 @@
 package app;
 
 import app.UI.AppUserInterface;
-import app.view.CarritoView;
 
 public class Application {
 
