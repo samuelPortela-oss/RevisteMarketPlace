@@ -1,20 +1,18 @@
 package app.UI;
 
-import app.domain.Usuario;
-import app.repository.UsuarioRepositoryImpl;
-import app.service.UsuarioServiceImpl;
-import app.service.inputports.UsuarioUseCase;
-import app.service.outputports.UsuarioRepositoryInterface;
+import app.utils.FormRuleValidator;
 import app.view.CarritoView;
 import app.view.UsuarioView;
-import app.utils.FormRuleValidator;
 
 public class AppUserInterface {
 
-    UsuarioRepositoryInterface usuarioRepositoryInterface = new UsuarioRepositoryImpl();
-    UsuarioUseCase usuarioUseCase = new UsuarioServiceImpl(usuarioRepositoryInterface);
-    UsuarioView usuarioView = new UsuarioView(usuarioUseCase);
-    CarritoView carritoView = new CarritoView();
+    private final UsuarioView usuarioView;
+    private final CarritoView carritoView;
+
+    public AppUserInterface(UsuarioView usuarioView, CarritoView carritoView) {
+        this.usuarioView = usuarioView;
+        this.carritoView = carritoView;
+    }
 
     public void startApp() {
 
@@ -29,31 +27,23 @@ public class AppUserInterface {
             switch (option) {
 
                 case 1:
-                    Usuario usuario = usuarioView.readUsuario();
-                    usuarioUseCase.createUsuario(usuario);
-                    usuarioView.showMessage("User created successfully.");
+                    usuarioView.createUsuario();
                     break;
 
                 case 2:
-                    usuarioView.showUsuarios(usuarioUseCase.getAllUsuarios());
+                    usuarioView.showAllUsuarios();
                     break;
 
                 case 3:
-                    int sellId = FormRuleValidator.validateInt("Enter user id to sell product:");
-                    usuarioUseCase.sellProduct(sellId);
-                    usuarioView.showMessage("Product sold.");
+                    usuarioView.sellProduct();
                     break;
 
                 case 4:
-                    int publishId = FormRuleValidator.validateInt("Enter user id to publish product:");
-                    usuarioUseCase.publishProduct(publishId);
-                    usuarioView.showMessage("Product published.");
+                    usuarioView.publishProduct();
                     break;
 
                 case 5:
-                    int buyId = FormRuleValidator.validateInt("Enter user id to buy product:");
-                    usuarioUseCase.buyProduct(buyId);
-                    usuarioView.showMessage("Product bought.");
+                    usuarioView.buyProduct();
                     break;
 
                 case 6:
@@ -62,6 +52,10 @@ public class AppUserInterface {
 
                 case 0:
                     System.out.println("Exit...");
+                    break;
+
+                default:
+                    System.out.println("Please select a valid option.");
                     break;
             }
 
