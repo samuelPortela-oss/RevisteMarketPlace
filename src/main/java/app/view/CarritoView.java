@@ -2,7 +2,6 @@ package app.view;
 
 import app.domain.Carrito;
 import app.domain.Producto;
-import app.service.CarritoServiceImpl;
 import app.service.inputports.CarritoUseCase;
 
 import java.util.Scanner;
@@ -11,8 +10,8 @@ public class CarritoView {
     private final CarritoUseCase carritoUseCase;
     private final Scanner scanner;
 
-    public CarritoView() {
-        this.carritoUseCase = new CarritoServiceImpl();
+    public CarritoView(CarritoUseCase carritoUseCase) {
+        this.carritoUseCase = carritoUseCase;
         this.scanner = new Scanner(System.in);
     }
 
