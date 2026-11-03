@@ -25,7 +25,7 @@ public class UsuarioRepositoryImplBD implements UsuarioRepositoryInterface {
     public void createUsuario(Usuario usuario) {
 
         String sql = "INSERT INTO usuario (id_usuario, nombre, correo, contrasena, celular, " +
-                "direccion, fecha_registro, activo, calificacion, numero_ventas, " +
+                "direccion, fecha_registro, estado, calificacion, numero_ventas, " +
                 "productos_publicados, compras_realizadas, lista_deseos, metodo_pago) " +
                 "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
@@ -106,7 +106,7 @@ public class UsuarioRepositoryImplBD implements UsuarioRepositoryInterface {
     public boolean updateUsuario(Usuario usuarioActualizado) {
 
         String sql = "UPDATE usuario SET nombre = ?, correo = ?, contrasena = ?, celular = ?, " +
-                "direccion = ?, fecha_registro = ?, activo = ?, calificacion = ?, numero_ventas = ?, " +
+                "direccion = ?, fecha_registro = ?, estado = ?, calificacion = ?, numero_ventas = ?, " +
                 "productos_publicados = ?, compras_realizadas = ?, lista_deseos = ?, metodo_pago = ? " +
                 "WHERE id_usuario = ?";
 
@@ -118,7 +118,7 @@ public class UsuarioRepositoryImplBD implements UsuarioRepositoryInterface {
             ps.setString(4, usuarioActualizado.getCelular());
             ps.setString(5, usuarioActualizado.getDireccion());
             ps.setString(6, usuarioActualizado.getFechaRegistro());
-            ps.setBoolean(7, usuarioActualizado.getActivo());
+            ps.setString(7, usuarioActualizado.getEstado());
             ps.setString(8, usuarioActualizado.getCalificacion());
             ps.setInt(9, usuarioActualizado.getNumeroVentas());
             ps.setInt(10, usuarioActualizado.getProductosPublicados());
@@ -158,7 +158,7 @@ public class UsuarioRepositoryImplBD implements UsuarioRepositoryInterface {
         ps.setString(5, usuario.getCelular());
         ps.setString(6, usuario.getDireccion());
         ps.setString(7, usuario.getFechaRegistro());
-        ps.setBoolean(8, usuario.getActivo());
+        ps.setString(8, usuario.getEstado());
         ps.setString(9, usuario.getCalificacion());
         ps.setInt(10, usuario.getNumeroVentas());
         ps.setInt(11, usuario.getProductosPublicados());

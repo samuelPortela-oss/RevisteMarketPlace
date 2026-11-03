@@ -8,10 +8,15 @@ public class Usuario {
     private String nombre;
     private String correo;
     private String contrasena;
+<<<<<<< HEAD
+    private int celular;
+    private String direccion;
+    private String fechaRegistro;
+=======
     private String celular;
     private String direccion;
     private String fechaRegistro;
-    private Boolean activo;
+    private String estado;
 
     // Seller attributes
     private String calificacion;
@@ -22,11 +27,17 @@ public class Usuario {
     private int comprasRealizadas;
     private String listaDeseos;
     private String metodoPago;
+>>>>>>> 50c9d38602c8a1e449437fdd0a906df001cbd04b
 
     public Usuario() {
     }
 
-    public Usuario(int idUsuario, String nombre, String correo, String contrasena, String celular, String direccion, String fechaRegistro, Boolean activo) {
+<<<<<<< HEAD
+    public Usuario(int idUsuario, String nombre, String correo, String contrasena,
+                   int celular, String direccion, String fechaRegistro) {
+=======
+    public Usuario(int idUsuario, String nombre, String correo, String contrasena, String celular, String direccion, String fechaRegistro, String estado) {
+>>>>>>> 50c9d38602c8a1e449437fdd0a906df001cbd04b
         this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.correo = correo;
@@ -34,13 +45,16 @@ public class Usuario {
         this.celular = celular;
         this.direccion = direccion;
         this.fechaRegistro = fechaRegistro;
-        this.activo = activo;
+<<<<<<< HEAD
+=======
+        this.estado = estado;
         this.calificacion = "0.0";
         this.numeroVentas = 0;
         this.productosPublicados = 0;
         this.comprasRealizadas = 0;
         this.listaDeseos = "";
         this.metodoPago = "";
+>>>>>>> 50c9d38602c8a1e449437fdd0a906df001cbd04b
     }
 
     public int getIdUsuario() {
@@ -75,11 +89,19 @@ public class Usuario {
         this.contrasena = contrasena;
     }
 
+<<<<<<< HEAD
+    public int getCelular() {
+        return celular;
+    }
+
+    public void setCelular(int celular) {
+=======
     public String getCelular() {
         return celular;
     }
 
     public void setCelular(String celular) {
+>>>>>>> 50c9d38602c8a1e449437fdd0a906df001cbd04b
         this.celular = celular;
     }
 
@@ -99,12 +121,24 @@ public class Usuario {
         this.fechaRegistro = fechaRegistro;
     }
 
-    public Boolean getActivo() {
-        return activo;
+<<<<<<< HEAD
+
+    @Override
+    public String toString() {
+        return "app.domain.Usuario{" +
+                "idUsuario=" + idUsuario +
+                ", nombre='" + nombre + '\'' +
+                ", correo='" + correo + '\'' +
+                ", celular=" + celular +
+                ", direccion='" + direccion + '\'' +
+                ", fechaRegistro=" + fechaRegistro +
+=======
+    public String getEstado() {
+        return estado;
     }
 
-    public void setActivo(Boolean activo) {
-        this.activo = activo;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public String getCalificacion() {
@@ -180,13 +214,14 @@ public class Usuario {
                 ", celular='" + celular + '\'' +
                 ", direccion='" + direccion + '\'' +
                 ", fechaRegistro='" + fechaRegistro + '\'' +
-                ", activo=" + activo +
+                ", estado='" + estado + '\'' +
                 ", calificacion='" + calificacion + '\'' +
                 ", numeroVentas=" + numeroVentas +
                 ", productosPublicados=" + productosPublicados +
                 ", comprasRealizadas=" + comprasRealizadas +
                 ", listaDeseos='" + listaDeseos + '\'' +
                 ", metodoPago='" + metodoPago + '\'' +
+>>>>>>> 50c9d38602c8a1e449437fdd0a906df001cbd04b
                 '}';
     }
 }
