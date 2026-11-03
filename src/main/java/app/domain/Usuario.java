@@ -11,7 +11,7 @@ public class Usuario {
     private String celular;
     private String direccion;
     private String fechaRegistro;
-    private Boolean activo;
+    private String estado;
 
     // Seller attributes
     private String calificacion;
@@ -26,7 +26,7 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(int idUsuario, String nombre, String correo, String contrasena, String celular, String direccion, String fechaRegistro, Boolean activo) {
+    public Usuario(int idUsuario, String nombre, String correo, String contrasena, String celular, String direccion, String fechaRegistro, String estado) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.correo = correo;
@@ -34,7 +34,7 @@ public class Usuario {
         this.celular = celular;
         this.direccion = direccion;
         this.fechaRegistro = fechaRegistro;
-        this.activo = activo;
+        this.estado = estado;
         this.calificacion = "0.0";
         this.numeroVentas = 0;
         this.productosPublicados = 0;
@@ -99,12 +99,12 @@ public class Usuario {
         this.fechaRegistro = fechaRegistro;
     }
 
-    public Boolean getActivo() {
-        return activo;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setActivo(Boolean activo) {
-        this.activo = activo;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public String getCalificacion() {
@@ -180,7 +180,7 @@ public class Usuario {
                 ", celular='" + celular + '\'' +
                 ", direccion='" + direccion + '\'' +
                 ", fechaRegistro='" + fechaRegistro + '\'' +
-                ", activo=" + activo +
+                ", estado='" + estado + '\'' +
                 ", calificacion='" + calificacion + '\'' +
                 ", numeroVentas=" + numeroVentas +
                 ", productosPublicados=" + productosPublicados +

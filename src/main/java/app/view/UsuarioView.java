@@ -1,6 +1,8 @@
 package app.view;
 
 import app.domain.Usuario;
+import app.service.helpers.SetEstadoUsuario;
+import app.service.helpers.SetMetodoPago;
 import app.service.inputports.UsuarioUseCase;
 import app.utils.FormRuleValidator;
 
@@ -70,14 +72,14 @@ public class UsuarioView {
 
         usuario.setDireccion(FormRuleValidator.validateString("Enter address:"));
 
-        usuario.setActivo(FormRuleValidator.validateYesNo("Active user?"));
+        usuario.setEstado(SetEstadoUsuario.getEstadoUsuario());
 
         usuario.setCalificacion("0.0");
         usuario.setNumeroVentas(0);
         usuario.setProductosPublicados(0);
         usuario.setComprasRealizadas(0);
         usuario.setListaDeseos("");
-        usuario.setMetodoPago("");
+        usuario.setMetodoPago(SetMetodoPago.getMetodoPago());
 
         return usuario;
     }
@@ -99,8 +101,7 @@ public class UsuarioView {
             System.out.println("Email: " + usuario.getCorreo());
             System.out.println("Phone: " + usuario.getCelular());
             System.out.println("Address: " + usuario.getDireccion());
-            System.out.println("Status: "
-                    + (usuario.getActivo() ? "Active" : "Inactive"));
+            System.out.println("Status: " + usuario.getEstado());
             System.out.println("=====================");
         }
     }
