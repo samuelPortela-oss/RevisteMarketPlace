@@ -1,125 +1,97 @@
 package app.UI;
 
-import app.repository.CategoriaRepositoryImpl;
-import app.repository.PerfilRepositoryImpl;
-import app.service.CategoriaServiceImpl;
-import app.service.PerfilServiceImpl;
-import app.service.inputports.CategoriaUseCase;
-import app.service.inputports.PerfilUseCase;
-import app.service.outputports.CategoriaRepositoryInterface;
-import app.service.outputports.PerfilRepositoryInterface;
 import app.utils.FormRuleValidator;
-import app.view.CategoriaView;
-import app.view.PerfilView;
 
 public class AppUserInterface {
 
-    PerfilRepositoryInterface perfilRepositoryInterface = new PerfilRepositoryImpl();
-    PerfilUseCase perfilUseCase = new PerfilServiceImpl(perfilRepositoryInterface);
-    PerfilView perfilView = new PerfilView(perfilUseCase);
+    private final UsuarioMenu usuarioMenu;
+    private final CategoriaMenu categoriaMenu;
+    private final PrendaMenu prendaMenu;
+    private final CarritoMenu carritoMenu;
+    private final OrdenMenu ordenMenu;
+    private final PagoMenu pagoMenu;
+    private final MetodoPagoMenu metodoPagoMenu;
 
-    CategoriaRepositoryInterface categoriaRepositoryInterface = new CategoriaRepositoryImpl();
-    CategoriaUseCase categoriaUseCase = new CategoriaServiceImpl(categoriaRepositoryInterface);
-    CategoriaView categoriaView = new CategoriaView(categoriaUseCase);
+    public AppUserInterface(
+            UsuarioMenu usuarioMenu,
+            CategoriaMenu categoriaMenu,
+            PrendaMenu prendaMenu,
+            CarritoMenu carritoMenu,
+            OrdenMenu ordenMenu,
+            PagoMenu pagoMenu,
+            MetodoPagoMenu metodoPagoMenu) {
 
-    public void startApp(){
-        int init = FormRuleValidator.validateInt("Presione 1 para iniciar la aplicación");
+        this.usuarioMenu = usuarioMenu;
+        this.categoriaMenu = categoriaMenu;
+        this.prendaMenu = prendaMenu;
+        this.carritoMenu = carritoMenu;
+        this.ordenMenu = ordenMenu;
+        this.pagoMenu = pagoMenu;
+        this.metodoPagoMenu = metodoPagoMenu;
+    }
+
+    public void startApp() {
+
+        int opcion;
+
         do {
-            int option = FormRuleValidator.validateInt("""
-                    1. Registro.
-                    2. Login.
-                    3. Categorías.
-                    4. Salir.
-                    """);
 
-            System.out.println("Bienvenido a la aplicacion de compra y venta de ropa de segunda mano -Reviste");
+            mostrarMenu();
 
-            switch (option) {
+            opcion = FormRuleValidator.validateInt(
+                    "Seleccione una opción:");
+
+            switch (opcion) {
+
                 case 1:
-                    System.out.println("Registro de nuevo perfil");
-                    perfilView.createPerfil();
+                    usuarioMenu.abrir();
                     break;
+
                 case 2:
-                    System.out.println("Login");
-                    perfilMenu();
+                    categoriaMenu.abrir();
                     break;
+
                 case 3:
-                    System.out.println("Categorías");
-                    categoriaMenu();
+                    prendaMenu.abrir();
                     break;
+
                 case 4:
-                    System.out.println("Salir");
-                    init = 0;
+                    carritoMenu.abrir();
                     break;
-                default:
-                    System.out.println("Seleccione una opción válida");
-            }
-        } while (init != 0);
-    }
-public void perfilMenu(){
-    while(true){
-        int option = FormRuleValidator.validateInt("""
-                    1. crear Perfil.
-                    2. Buscar Perfil por Id.
-                    3. Listar todos los Perfiles.
-                    """);
 
-        switch (option){
-            case 1:
-                System.out.println("Crear nuevo perfil");
-                perfilView.createPerfil();
-                break;
-            case 2:
-                System.out.println("Buscar perfil por Id");
-                int id = FormRuleValidator.validateInt("Ingrese el id del perfil a buscar");
-                perfilView.getPerfilById(id);
-                break;
-            case 3:
-                System.out.println("Listar todos los perfiles");
-                perfilView.getAllPerfils();
-                break;
-            default:
-                System.out.println("Seleccione una opcion valida");
-        }
-    }
-}
-
-    public void categoriaMenu() {
-        boolean volver = false;
-        while (!volver) {
-            int option = FormRuleValidator.validateInt("""
-                    1. Crear categoría.
-                    2. Buscar categoría por Id.
-                    3. Listar todas las categorías.
-                    4. Actualizar categoría.
-                    5. Eliminar categoría.
-                    0. Volver.
-                    """);
-
-            switch (option) {
-                case 1:
-                    categoriaView.createCategoria();
-                    break;
-                case 2:
-                    int idBuscar = FormRuleValidator.validateInt("Ingrese el id de la categoría a buscar");
-                    categoriaView.getCategoriaById(idBuscar);
-                    break;
-                case 3:
-                    categoriaView.getAllCategorias();
-                    break;
-                case 4:
-                    categoriaView.updateCategoria();
-                    break;
                 case 5:
-                    int idEliminar = FormRuleValidator.validateInt("Ingrese el id de la categoría a eliminar");
-                    categoriaView.deleteCategoria(idEliminar);
+                    ordenMenu.abrir();
                     break;
+
+                case 6:
+                    pagoMenu.abrir();
+                    break;
+
+                case 7:
+                    metodoPagoMenu.abrir();
+                    break;
+
                 case 0:
-                    volver = true;
+                    System.out.println("Saliendo...");
                     break;
+
                 default:
-                    System.out.println("Seleccione una opción válida");
+                    System.out.println("Opción inválida.");
             }
-        }
+
+        } while (opcion != 0);
+    }
+
+    private void mostrarMenu() {
+
+        System.out.println("\n=== REVISTE MARKETPLACE - ROPA DE SEGUNDA MANO ===");
+        System.out.println("1. Módulo de usuarios");
+        System.out.println("2. Módulo de categorías");
+        System.out.println("3. Módulo de prendas");
+        System.out.println("4. Módulo de carrito");
+        System.out.println("5. Módulo de órdenes");
+        System.out.println("6. Módulo de pagos");
+        System.out.println("7. Módulo de métodos de pago");
+        System.out.println("0. Salir");
     }
 }
