@@ -1,50 +1,110 @@
 package app.view;
 
-import app.service.helpers.SetEstadoPrenda;
+import app.domain.Prenda;
+import app.service.helpers.SetCondicionPrenda;
 import app.service.inputports.PrendaUseCase;
 import app.utils.FormRuleValidator;
 
+import java.util.List;
+
 public class PrendaView {
 
-    private final PrendaUseCase prendaService;
+    private PrendaUseCase prendaUseCase;
 
-    public PrendaView(PrendaUseCase prendaUseCase) {
-        this.prendaService = prendaUseCase;
+    public PrendaView(
+            PrendaUseCase prendaUseCase) {
+
+        this.prendaUseCase = prendaUseCase;
     }
 
-    public void createPrenda() {
+    public Prenda leerPrenda() {
 
-        System.out.println("Creando prenda");
+        Prenda prenda = new Prenda();
 
-        int id = FormRuleValidator.validateInt("Ingrese el ID de la prenda:");
+        prenda.setIdVendedor(
+                FormRuleValidator.validateInt(
+                        "Ingrese el ID del vendedor (usuario):"));
 
-        String nombre = FormRuleValidator.validateString("Ingrese el nombre/tipo de la prenda:");
+        leerDatosEdicion(prenda);
 
-        String marca = FormRuleValidator.validateString("Ingrese la marca de la prenda:");
-
-        String talla = FormRuleValidator.validateString("Ingrese la talla de la prenda (XS, S, M, L, XL):");
-
-        String estado = SetEstadoPrenda.getEstadoPrenda();
-
-        double precio = FormRuleValidator.validateDouble("Ingrese el precio de la prenda:");
-
-        prendaService.createPrenda(id, nombre, marca, talla, estado, precio);
+        return prenda;
     }
 
-    public void showPrenda() {
-        System.out.println("Listado de prendas");
-        prendaService.showPrendas();
+    // Lee los datos editables de una prenda sobre el objeto recibido
+    public void leerDatosEdicion(Prenda prenda) {
+
+        prenda.setIdCategoria(
+                FormRuleValidator.validateInt(
+                        "Ingrese el ID de la categoría:"));
+
+        prenda.setNombre(
+                FormRuleValidator.validateString(
+                        "Ingrese el nombre de la prenda:"));
+
+        prenda.setDescripcion(
+                FormRuleValidator.validateString(
+                        "Ingrese la descripción:"));
+
+        prenda.setMarca(
+                FormRuleValidator.validateString(
+                        "Ingrese la marca:"));
+
+        prenda.setTalla(
+                FormRuleValidator.validateString(
+                        "Ingrese la talla (XS, S, M, L, XL, XXL, TALLA_UNICA o 6-44):")
+                        .toUpperCase());
+
+        prenda.setCondicion(SetCondicionPrenda.getCondicionPrenda());
+
+        prenda.setPrecio(
+                FormRuleValidator.validateDouble(
+                        "Ingrese el precio:"));
+
+        prenda.setStock(
+                FormRuleValidator.validateInt(
+                        "Ingrese el stock:"));
     }
 
-    public void showPrendaById() {
-        System.out.println("Buscar prenda por Id");
-        int id = FormRuleValidator.validateInt("Ingrese el ID de la prenda a buscar:");
-        prendaService.showPrendaById(id);
+    public int leerIdPrenda() {
+
+        return FormRuleValidator.validateInt(
+                "Ingrese el ID de la prenda:");
     }
 
-    public void deletePrenda() {
-        System.out.println("Eliminar prenda");
-        int id = FormRuleValidator.validateInt("Ingrese el ID de la prenda a eliminar:");
-        prendaService.deletePrenda(id);
+    public void mostrarPrenda(Prenda prenda) {
+
+        System.out.println(prenda);
+    }
+
+    public void mostrarPrendas(List<Prenda> prendas) {
+
+        if (prendas.isEmpty()) {
+
+            System.out.println("No se encontraron prendas.");
+            return;
+        }
+
+        System.out.println("\n========== PRENDAS ==========");
+
+        for (Prenda prenda : prendas) {
+
+            System.out.println("ID: " + prenda.getIdPrenda());
+            System.out.println("Nombre: " + prenda.getNombre());
+            System.out.println("Descripción: " + prenda.getDescripcion());
+            System.out.println("Marca: " + prenda.getMarca());
+            System.out.println("Talla: " + prenda.getTalla());
+            System.out.println("Condición: " + prenda.getCondicion());
+            System.out.println("Precio: " + prenda.getPrecio());
+            System.out.println("Stock: " + prenda.getStock());
+            System.out.println("Estado: " + prenda.getEstado());
+            System.out.println("ID vendedor: " + prenda.getIdVendedor());
+            System.out.println("ID categoría: " + prenda.getIdCategoria());
+            System.out.println("=====================");
+        }
+    }
+
+    public void mostrarMensaje(String mensaje) {
+
+        System.out.println(mensaje);
     }
 }

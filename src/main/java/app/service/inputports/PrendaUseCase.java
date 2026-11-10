@@ -1,13 +1,27 @@
 package app.service.inputports;
 
+import app.domain.Prenda;
+
+import java.util.List;
+import java.util.Optional;
+
 public interface PrendaUseCase {
 
-    // Solo declaramos los métodos que se van a usar (sin código dentro)
-    void createPrenda(int id, String nombre, String marca, String talla, String estado, double precio);
+    void crearPrenda(Prenda prenda);
 
-    void showPrendas();
+    Optional<Prenda> obtenerPrendaPorId(int idPrenda);
 
-    void showPrendaById(int id);
+    List<Prenda> listarPrendas();
 
-    void deletePrenda(int id);
+    List<Prenda> listarPrendasDisponibles();
+
+    List<Prenda> listarPrendasPorVendedor(int idVendedor);
+
+    List<Prenda> listarPrendasPorCategoria(int idCategoria);
+
+    boolean actualizarPrenda(Prenda prenda);
+
+    boolean marcarPrendaComoVendida(int idPrenda);
+
+    boolean eliminarPrenda(int idPrenda);
 }

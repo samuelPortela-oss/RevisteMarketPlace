@@ -9,22 +9,22 @@ public class DataBaseConnection {
     private static DataBaseConnection instance;
     private final Connection connection;
 
-    private static final String url = "jdbc:mysql://localhost:3306/reviste_db";
+    // Credenciales por defecto de XAMPP (MySQL/MariaDB). Solo para desarrollo local:
+    // exponer secretos en el código es una mala práctica; en producción usar un gestor de secretos.
+    private static final String url = "jdbc:mysql://localhost:3306/reviste_marketplace_db";
     private static final String userName = "root";
-    private static final String password = "reviste123";
+    private static final String password = "";
 
     private DataBaseConnection() {
-
         try {
             connection = DriverManager.getConnection(url, userName, password);
-            System.out.println("Conexion exitosa a la base de datos");
+            System.out.println("Conexión exitosa a la base de datos");
         } catch (SQLException e) {
-            throw new RuntimeException("Error al conectar a la base de datos");
+            throw new RuntimeException("Error al conectar a la base de datos: " + e.getMessage());
         }
     }
 
     public static synchronized DataBaseConnection getInstance() {
-
         if (instance == null) {
             instance = new DataBaseConnection();
         }

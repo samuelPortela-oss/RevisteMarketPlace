@@ -1,119 +1,97 @@
 package app.UI;
 
 import app.utils.FormRuleValidator;
-import app.view.CarritoView;
-import app.view.PrendaView;
-import app.view.UsuarioView;
 
 public class AppUserInterface {
 
-    private final UsuarioView usuarioView;
-    private final CarritoView carritoView;
-    private final PrendaView prendaView;
+    private final UsuarioMenu usuarioMenu;
+    private final CategoriaMenu categoriaMenu;
+    private final PrendaMenu prendaMenu;
+    private final CarritoMenu carritoMenu;
+    private final OrdenMenu ordenMenu;
+    private final PagoMenu pagoMenu;
+    private final MetodoPagoMenu metodoPagoMenu;
 
-    public AppUserInterface(UsuarioView usuarioView, CarritoView carritoView, PrendaView prendaView) {
-        this.usuarioView = usuarioView;
-        this.carritoView = carritoView;
-        this.prendaView = prendaView;
+    public AppUserInterface(
+            UsuarioMenu usuarioMenu,
+            CategoriaMenu categoriaMenu,
+            PrendaMenu prendaMenu,
+            CarritoMenu carritoMenu,
+            OrdenMenu ordenMenu,
+            PagoMenu pagoMenu,
+            MetodoPagoMenu metodoPagoMenu) {
+
+        this.usuarioMenu = usuarioMenu;
+        this.categoriaMenu = categoriaMenu;
+        this.prendaMenu = prendaMenu;
+        this.carritoMenu = carritoMenu;
+        this.ordenMenu = ordenMenu;
+        this.pagoMenu = pagoMenu;
+        this.metodoPagoMenu = metodoPagoMenu;
     }
 
     public void startApp() {
 
-        int option;
+        int opcion;
 
         do {
 
-            showMenu();
+            mostrarMenu();
 
-            option = FormRuleValidator.validateInt("Select an option:");
+            opcion = FormRuleValidator.validateInt(
+                    "Seleccione una opción:");
 
-            switch (option) {
+            switch (opcion) {
 
                 case 1:
-                    usuarioView.createUsuario();
+                    usuarioMenu.abrir();
                     break;
 
                 case 2:
-                    usuarioView.showAllUsuarios();
+                    categoriaMenu.abrir();
                     break;
 
                 case 3:
-                    usuarioView.sellProduct();
+                    prendaMenu.abrir();
                     break;
 
                 case 4:
-                    usuarioView.publishProduct();
+                    carritoMenu.abrir();
                     break;
 
                 case 5:
-                    usuarioView.buyProduct();
+                    ordenMenu.abrir();
                     break;
 
                 case 6:
-                    carritoView.mostrarMenu();
+                    pagoMenu.abrir();
                     break;
 
                 case 7:
-                    menuPrendas();
+                    metodoPagoMenu.abrir();
                     break;
 
                 case 0:
-                    System.out.println("Exit...");
+                    System.out.println("Saliendo...");
                     break;
 
                 default:
-                    System.out.println("Please select a valid option.");
-                    break;
+                    System.out.println("Opción inválida.");
             }
 
-        } while (option != 0);
+        } while (opcion != 0);
     }
 
-    public void menuPrendas() {
-        while (true) {
-            int option = FormRuleValidator.validateInt("""
-                    1. Crear Prenda.
-                    2. Buscar Prenda por Id.
-                    3. Listar todas las Prendas.
-                    4. Eliminar Prenda.
-                    5. Volver.
-                    """);
+    private void mostrarMenu() {
 
-            switch (option) {
-                case 1:
-                    System.out.println("Crear nueva prenda");
-                    prendaView.createPrenda();
-                    break;
-                case 2:
-                    System.out.println("Buscar prenda por Id");
-                    prendaView.showPrendaById();
-                    break;
-                case 3:
-                    System.out.println("Listar todas las prendas");
-                    prendaView.showPrenda();
-                    break;
-                case 4:
-                    System.out.println("Eliminar prenda");
-                    prendaView.deletePrenda();
-                    break;
-                case 5:
-                    return;
-                default:
-                    System.out.println("Seleccione una opcion valida");
-            }
-        }
-    }
-
-    private void showMenu() {
-
-        System.out.println("\n=== USER MENU ===");
-        System.out.println("1. Create User");
-        System.out.println("2. List Users");
-        System.out.println("3. Sell Product");
-        System.out.println("4. Publish Product");
-        System.out.println("5. Buy Product");
-        System.out.println("6. Shopping Cart");
-        System.out.println("7. Prendas");
-        System.out.println("0. Exit");
+        System.out.println("\n=== REVISTE MARKETPLACE - ROPA DE SEGUNDA MANO ===");
+        System.out.println("1. Módulo de usuarios");
+        System.out.println("2. Módulo de categorías");
+        System.out.println("3. Módulo de prendas");
+        System.out.println("4. Módulo de carrito");
+        System.out.println("5. Módulo de órdenes");
+        System.out.println("6. Módulo de pagos");
+        System.out.println("7. Módulo de métodos de pago");
+        System.out.println("0. Salir");
     }
 }
