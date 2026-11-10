@@ -1,36 +1,68 @@
 package app.domain;
 
+import app.domain.enums.CondicionPrendaEnum;
+import app.domain.enums.EstadoPrendaEnum;
+
 public class Prenda {
 
-    // 1. Atributos (las características de la prenda)
-    private int id;
+    public static final int MAXIMO_FOTOS = 5;
+
+    private int idPrenda;
+    private int idVendedor;
+    private int idCategoria;
     private String nombre;
+    private String descripcion;
     private String marca;
     private String talla;
-    private String estado;
+    private CondicionPrendaEnum condicion;
     private double precio;
+    private int stock;
+    private EstadoPrendaEnum estado;
+    private String fechaPublicacion;
 
-    // 2. Constructor vacío
     public Prenda() {
     }
 
-    // 3. Constructor con parámetros
-    public Prenda(int id, String nombre, String marca, String talla, String estado, double precio) {
-        this.id = id;
+    public Prenda(int idPrenda, int idVendedor, int idCategoria, String nombre,
+                  String descripcion, String marca, String talla,
+                  CondicionPrendaEnum condicion, double precio, int stock,
+                  EstadoPrendaEnum estado, String fechaPublicacion) {
+        this.idPrenda = idPrenda;
+        this.idVendedor = idVendedor;
+        this.idCategoria = idCategoria;
         this.nombre = nombre;
+        this.descripcion = descripcion;
         this.marca = marca;
         this.talla = talla;
-        this.estado = estado;
+        this.condicion = condicion;
         this.precio = precio;
+        this.stock = stock;
+        this.estado = estado;
+        this.fechaPublicacion = fechaPublicacion;
     }
 
-    // 4. Getters y Setters (sirven para obtener y modificar los datos)
-    public int getId() {
-        return id;
+    public int getIdPrenda() {
+        return idPrenda;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdPrenda(int idPrenda) {
+        this.idPrenda = idPrenda;
+    }
+
+    public int getIdVendedor() {
+        return idVendedor;
+    }
+
+    public void setIdVendedor(int idVendedor) {
+        this.idVendedor = idVendedor;
+    }
+
+    public int getIdCategoria() {
+        return idCategoria;
+    }
+
+    public void setIdCategoria(int idCategoria) {
+        this.idCategoria = idCategoria;
     }
 
     public String getNombre() {
@@ -39,6 +71,14 @@ public class Prenda {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public String getMarca() {
@@ -57,12 +97,12 @@ public class Prenda {
         this.talla = talla;
     }
 
-    public String getEstado() {
-        return estado;
+    public CondicionPrendaEnum getCondicion() {
+        return condicion;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setCondicion(CondicionPrendaEnum condicion) {
+        this.condicion = condicion;
     }
 
     public double getPrecio() {
@@ -72,5 +112,46 @@ public class Prenda {
     public void setPrecio(double precio) {
         this.precio = precio;
     }
-}
 
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public EstadoPrendaEnum getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoPrendaEnum estado) {
+        this.estado = estado;
+    }
+
+    public String getFechaPublicacion() {
+        return fechaPublicacion;
+    }
+
+    public void setFechaPublicacion(String fechaPublicacion) {
+        this.fechaPublicacion = fechaPublicacion;
+    }
+
+    @Override
+    public String toString() {
+        return "Prenda{" +
+                "idPrenda=" + idPrenda +
+                ", idVendedor=" + idVendedor +
+                ", idCategoria=" + idCategoria +
+                ", nombre='" + nombre + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", marca='" + marca + '\'' +
+                ", talla='" + talla + '\'' +
+                ", condicion=" + condicion +
+                ", precio=" + precio +
+                ", stock=" + stock +
+                ", estado=" + estado +
+                ", fechaPublicacion='" + fechaPublicacion + '\'' +
+                '}';
+    }
+}

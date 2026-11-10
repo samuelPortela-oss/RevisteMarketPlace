@@ -1,63 +1,50 @@
 package app.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Carrito {
-    private Long id;
-    private List<ItemCarrito> items;
-    private double total;
 
-    public Carrito(Long id) {
-        this.id = id;
-        this.items = new ArrayList<>();
-        this.total = 0.0;
+    private int idCarrito;
+    private int idUsuario;
+    private String fechaCreacion;
+
+    public Carrito() {
     }
 
-    public void agregarProducto(Producto producto, int cantidad) {
-        // Verificar si el producto ya está en el carrito para sumar la cantidad
-        for (ItemCarrito item : items) {
-            if (item.getProducto().getId().equals(producto.getId())) {
-                item.setCantidad(item.getCantidad() + cantidad);
-                this.total = calcularTotal();
-                return;
-            }
-        }
-        // Si no está, se crea un nuevo item
-        ItemCarrito nuevoItem = new ItemCarrito(producto, cantidad);
-        items.add(nuevoItem);
-        this.total = calcularTotal();
+    public Carrito(int idCarrito, int idUsuario, String fechaCreacion) {
+        this.idCarrito = idCarrito;
+        this.idUsuario = idUsuario;
+        this.fechaCreacion = fechaCreacion;
     }
 
-    public void eliminarProducto(Long productoId) {
-        items.removeIf(item -> item.getProducto().getId().equals(productoId));
-        this.total = calcularTotal();
+    public int getIdCarrito() {
+        return idCarrito;
     }
 
-    public double calcularTotal() {
-        double suma = 0;
-        for (ItemCarrito item : items) {
-            suma += item.getSubtotal();
-        }
-        return suma;
+    public void setIdCarrito(int idCarrito) {
+        this.idCarrito = idCarrito;
     }
 
-    public void vaciarCarrito() {
-        items.clear();
-        this.total = 0.0;
+    public int getIdUsuario() {
+        return idUsuario;
     }
 
-    // Getters y Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public List<ItemCarrito> getItems() { return items; }
-    public void setItems(List<ItemCarrito> items) {
-        this.items = items;
-        this.total = calcularTotal();
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
-    public double getTotal() {
-        return calcularTotal();
+    public String getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(String fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    @Override
+    public String toString() {
+        return "Carrito{" +
+                "idCarrito=" + idCarrito +
+                ", idUsuario=" + idUsuario +
+                ", fechaCreacion='" + fechaCreacion + '\'' +
+                '}';
     }
 }

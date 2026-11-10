@@ -5,14 +5,16 @@ public class Categoria {
     private int idCategoria;
     private String nombre;
     private String descripcion;
+    private Boolean activo;
 
     public Categoria() {
     }
 
-    public Categoria(int idCategoria, String nombre, String descripcion) {
+    public Categoria(int idCategoria, String nombre, String descripcion, Boolean activo) {
         this.idCategoria = idCategoria;
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.activo = activo;
     }
 
     public int getIdCategoria() {
@@ -39,12 +41,21 @@ public class Categoria {
         this.descripcion = descripcion;
     }
 
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
     @Override
     public String toString() {
         return "Categoria{" +
                 "idCategoria=" + idCategoria +
                 ", nombre='" + nombre + '\'' +
                 ", descripcion='" + descripcion + '\'' +
+                ", activo=" + activo +
                 '}';
     }
 }
