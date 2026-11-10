@@ -8,8 +8,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class UsuarioRepositoryImplBD implements UsuarioRepositoryInterface {
 
@@ -22,148 +24,98 @@ public class UsuarioRepositoryImplBD implements UsuarioRepositoryInterface {
     }
 
     @Override
-    public void createUsuario(Usuario usuario) {
+    public void crearUsuario(Usuario usuario) {
+        String sql = "INSERT INTO usuario (nombre, correo, contrasena, telefono, direccion, fecha_registro, activo) VALUES (?,?,?,?,?,?,?)";
 
-        String sql = "INSERT INTO usuario (id_usuario, nombre, correo, contrasena, celular, " +
-                "direccion, fecha_registro, estado, calificacion, numero_ventas, " +
-                "productos_publicados, compras_realizadas, lista_deseos, metodo_pago) " +
-                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-
+        try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             setUsuarioParams(ps, usuario);
             ps.executeUpdate();
-
+            try (ResultSet keys = ps.getGeneratedKeys()) {
+                if (keys.next()) {
+                    usuario.setIdUsuario(keys.getInt(1));
+                }
+            }
         } catch (SQLException e) {
-            throw new RuntimeException("Error al guardar usuario " + e.getMessage());
+            throw new RuntimeException("Error al guardar usuario: " + e.getMessage());
         }
     }
 
     @Override
-    public Usuario getUsuarioById(int idUsuario) {
-
+    public Optional<Usuario> obtenerUsuarioPorId(int idUsuario) {
         String sql = "SELECT * FROM usuario WHERE id_usuario = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
-
             ps.setInt(1, idUsuario);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                return rowMapper.mapRow(rs);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next() ? Optional.of(rowMapper.mapRow(rs)) : Optional.empty();
             }
-
         } catch (SQLException e) {
-            throw new RuntimeException("Error al consultar usuario " + e.getMessage());
+            throw new RuntimeException("Error al consultar usuario: " + e.getMessage());
         }
-
-        return null;
     }
 
     @Override
-    public Usuario getUsuarioByEmail(String email) {
-
+    public Optional<Usuario> obtenerUsuarioPorCorreo(String correo) {
         String sql = "SELECT * FROM usuario WHERE correo = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
-
-            ps.setString(1, email);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                return rowMapper.mapRow(rs);
+            ps.setString(1, correo);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next() ? Optional.of(rowMapper.mapRow(rs)) : Optional.empty();
             }
-
         } catch (SQLException e) {
-            throw new RuntimeException("Error al consultar usuario " + e.getMessage());
+            throw new RuntimeException("Error al consultar usuario por correo: " + e.getMessage());
         }
-
-        return null;
     }
 
     @Override
-    public List<Usuario> getAllUsuarios() {
-
+    public List<Usuario> listarUsuarios() {
+        String sql = "SELECT * FROM usuario ORDER BY id_usuario";
         List<Usuario> usuarios = new ArrayList<>();
-
-        String sql = "SELECT * FROM usuario";
 
         try (PreparedStatement ps = connection.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
-
             while (rs.next()) {
                 usuarios.add(rowMapper.mapRow(rs));
             }
-
         } catch (SQLException e) {
-            throw new RuntimeException("Error al consultar usuarios " + e.getMessage());
+            throw new RuntimeException("Error al listar usuarios: " + e.getMessage());
         }
-
         return usuarios;
     }
 
     @Override
-    public boolean updateUsuario(Usuario usuarioActualizado) {
-
-        String sql = "UPDATE usuario SET nombre = ?, correo = ?, contrasena = ?, celular = ?, " +
-                "direccion = ?, fecha_registro = ?, estado = ?, calificacion = ?, numero_ventas = ?, " +
-                "productos_publicados = ?, compras_realizadas = ?, lista_deseos = ?, metodo_pago = ? " +
-                "WHERE id_usuario = ?";
+    public boolean actualizarUsuario(Usuario usuario) {
+        String sql = "UPDATE usuario SET nombre = ?, correo = ?, contrasena = ?, telefono = ?, direccion = ?, fecha_registro = ?, activo = ? WHERE id_usuario = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
-
-            ps.setString(1, usuarioActualizado.getNombre());
-            ps.setString(2, usuarioActualizado.getCorreo());
-            ps.setString(3, usuarioActualizado.getContrasena());
-            ps.setString(4, usuarioActualizado.getCelular());
-            ps.setString(5, usuarioActualizado.getDireccion());
-            ps.setString(6, usuarioActualizado.getFechaRegistro());
-            ps.setString(7, usuarioActualizado.getEstado());
-            ps.setString(8, usuarioActualizado.getCalificacion());
-            ps.setInt(9, usuarioActualizado.getNumeroVentas());
-            ps.setInt(10, usuarioActualizado.getProductosPublicados());
-            ps.setInt(11, usuarioActualizado.getComprasRealizadas());
-            ps.setString(12, usuarioActualizado.getListaDeseos());
-            ps.setString(13, usuarioActualizado.getMetodoPago());
-            ps.setInt(14, usuarioActualizado.getIdUsuario());
-
+            setUsuarioParams(ps, usuario);
+            ps.setInt(8, usuario.getIdUsuario());
             return ps.executeUpdate() > 0;
-
         } catch (SQLException e) {
-            throw new RuntimeException("Error al actualizar usuario " + e.getMessage());
+            throw new RuntimeException("Error al actualizar usuario: " + e.getMessage());
         }
     }
 
     @Override
-    public boolean deleteUsuario(int idUsuario) {
-
+    public boolean eliminarUsuario(int idUsuario) {
         String sql = "DELETE FROM usuario WHERE id_usuario = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
-
             ps.setInt(1, idUsuario);
             return ps.executeUpdate() > 0;
-
         } catch (SQLException e) {
-            throw new RuntimeException("Error al eliminar usuario " + e.getMessage());
+            throw new RuntimeException("Error al eliminar usuario: " + e.getMessage());
         }
     }
 
     private void setUsuarioParams(PreparedStatement ps, Usuario usuario) throws SQLException {
-
-        ps.setInt(1, usuario.getIdUsuario());
-        ps.setString(2, usuario.getNombre());
-        ps.setString(3, usuario.getCorreo());
-        ps.setString(4, usuario.getContrasena());
-        ps.setString(5, usuario.getCelular());
-        ps.setString(6, usuario.getDireccion());
-        ps.setString(7, usuario.getFechaRegistro());
-        ps.setString(8, usuario.getEstado());
-        ps.setString(9, usuario.getCalificacion());
-        ps.setInt(10, usuario.getNumeroVentas());
-        ps.setInt(11, usuario.getProductosPublicados());
-        ps.setInt(12, usuario.getComprasRealizadas());
-        ps.setString(13, usuario.getListaDeseos());
-        ps.setString(14, usuario.getMetodoPago());
+        ps.setString(1, usuario.getNombre());
+        ps.setString(2, usuario.getCorreo());
+        ps.setString(3, usuario.getContrasena());
+        ps.setString(4, usuario.getTelefono());
+        ps.setString(5, usuario.getDireccion());
+        ps.setString(6, usuario.getFechaRegistro());
+        ps.setBoolean(7, Boolean.TRUE.equals(usuario.getActivo()));
     }
 }
