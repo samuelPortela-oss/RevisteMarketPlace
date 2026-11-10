@@ -1,25 +1,21 @@
 package app.service.inputports;
 
 import app.domain.Usuario;
+
 import java.util.List;
+import java.util.Optional;
 
 public interface UsuarioUseCase {
 
-    void createUsuario(Usuario usuario);
+    void crearUsuario(Usuario usuario);
 
-    Usuario login(String email, String password);
+    Usuario iniciarSesion(String correo, String contrasena);
 
-    Usuario getUsuarioById(int idUsuario);
+    Optional<Usuario> obtenerUsuarioPorId(int idUsuario);
 
-    List<Usuario> getAllUsuarios();
+    List<Usuario> listarUsuarios();
 
-    boolean updateUsuario(Usuario usuario);
+    boolean actualizarUsuario(Usuario usuario);
 
-    boolean deleteUsuario(int idUsuario);
-
-    void sellProduct(int idUsuario);
-
-    void publishProduct(int idUsuario);
-
-    void buyProduct(int idUsuario);
+    boolean eliminarUsuario(int idUsuario);
 }
