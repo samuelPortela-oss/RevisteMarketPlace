@@ -5,7 +5,8 @@ import java.util.Scanner;
 
 public class FormRuleValidator {
 
-    private static final Scanner sc = new Scanner(System.in);
+    private static final Scanner sc =
+            new Scanner(System.in);
 
     public static int validateInt(String prompt) {
 
@@ -23,7 +24,7 @@ public class FormRuleValidator {
             } catch (InputMismatchException e) {
 
                 System.out.println(
-                        "Invalid integer value.");
+                        "Valor entero inválido.");
 
                 sc.nextLine();
             }
@@ -47,7 +48,7 @@ public class FormRuleValidator {
             } catch (InputMismatchException e) {
 
                 System.out.println(
-                        "Invalid decimal value.");
+                        "Valor decimal inválido.");
 
                 sc.nextLine();
             }
@@ -70,7 +71,7 @@ public class FormRuleValidator {
             }
 
             System.out.println(
-                    "Value cannot be empty.");
+                    "El valor no puede estar vacío.");
         }
     }
 
@@ -91,7 +92,7 @@ public class FormRuleValidator {
             }
 
             System.out.println(
-                    "Invalid email format.");
+                    "Formato de correo inválido.");
         }
     }
 
@@ -111,7 +112,7 @@ public class FormRuleValidator {
             }
 
             System.out.println(
-                    "Password must contain at least 6 characters.");
+                    "La contraseña debe tener al menos 6 caracteres.");
         }
     }
 
@@ -131,7 +132,7 @@ public class FormRuleValidator {
             }
 
             System.out.println(
-                    "Phone must contain exactly 10 digits.");
+                    "El teléfono debe tener exactamente 10 dígitos.");
         }
     }
 
@@ -141,14 +142,14 @@ public class FormRuleValidator {
         while (true) {
 
             System.out.print(
-                    prompt + " (Y/N): ");
+                    prompt + " (S/N): ");
 
             String answer =
                     sc.nextLine()
                             .trim()
                             .toUpperCase();
 
-            if (answer.equals("Y")) {
+            if (answer.equals("S")) {
 
                 return true;
             }
@@ -159,7 +160,7 @@ public class FormRuleValidator {
             }
 
             System.out.println(
-                    "Enter Y or N.");
+                    "Ingrese S o N.");
         }
     }
 }

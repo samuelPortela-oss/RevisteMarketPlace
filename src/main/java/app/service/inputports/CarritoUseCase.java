@@ -1,11 +1,26 @@
 package app.service.inputports;
 
 import app.domain.Carrito;
-import app.domain.Producto;
+import app.domain.ItemCarrito;
 
-public interface CarritoUseCase {Carrito obtenerCarrito(Long carritoId);
-    void agregarProductoAlCarrito(Long carritoId, Producto producto, int cantidad);
-    void eliminarProductoDelCarrito(Long carritoId, Long productoId);
-    void vaciarCarrito(Long carritoId);
-    double calcularTotalCarrito(Long carritoId);
+import java.util.List;
+import java.util.Optional;
+
+public interface CarritoUseCase {
+
+    Carrito crearCarrito(int idUsuario);
+
+    Optional<Carrito> obtenerCarritoPorUsuario(int idUsuario);
+
+    void agregarPrendaAlCarrito(int idUsuario, int idPrenda, int cantidad);
+
+    List<ItemCarrito> listarItemsPorCarrito(int idCarrito);
+
+    double calcularTotalCarrito(int idCarrito);
+
+    boolean eliminarItem(int idItemCarrito);
+
+    void vaciarCarrito(int idCarrito);
+
+    List<Carrito> listarCarritos();
 }

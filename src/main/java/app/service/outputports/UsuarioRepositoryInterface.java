@@ -1,19 +1,21 @@
 package app.service.outputports;
 
 import app.domain.Usuario;
+
 import java.util.List;
+import java.util.Optional;
 
 public interface UsuarioRepositoryInterface {
 
-    void createUsuario(Usuario usuario);
+    void crearUsuario(Usuario usuario);
 
-    Usuario getUsuarioById(int idUsuario);
+    Optional<Usuario> obtenerUsuarioPorId(int idUsuario);
 
-    Usuario getUsuarioByEmail(String email);
+    Optional<Usuario> obtenerUsuarioPorCorreo(String correo);
 
-    List<Usuario> getAllUsuarios();
+    List<Usuario> listarUsuarios();
 
-    boolean updateUsuario(Usuario usuario);
+    boolean actualizarUsuario(Usuario usuario);
 
-    boolean deleteUsuario(int idUsuario);
+    boolean eliminarUsuario(int idUsuario);
 }

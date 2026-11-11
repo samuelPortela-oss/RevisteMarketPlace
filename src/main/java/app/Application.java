@@ -5,7 +5,7 @@ import app.config.Config;
 
 public class Application {
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
 
         AppUserInterface appUserInterface = Config.app();
 

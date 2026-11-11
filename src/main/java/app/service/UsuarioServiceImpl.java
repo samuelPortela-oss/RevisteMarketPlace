@@ -3,83 +3,82 @@ package app.service;
 import app.domain.Usuario;
 import app.service.inputports.UsuarioUseCase;
 import app.service.outputports.UsuarioRepositoryInterface;
+import app.utils.FechaUtil;
 
 import java.util.List;
+import java.util.Optional;
 
 public class UsuarioServiceImpl implements UsuarioUseCase {
 
     private final UsuarioRepositoryInterface repository;
 
-    public UsuarioServiceImpl(UsuarioRepositoryInterface repository) {
+    public UsuarioServiceImpl(
+            UsuarioRepositoryInterface repository) {
+
         this.repository = repository;
     }
 
     @Override
-    public void createUsuario(Usuario usuario) {
-        Usuario exists = repository.getUsuarioByEmail(usuario.getCorreo());
+    public void crearUsuario(Usuario usuario) {
 
-        if (exists != null) {
-            System.out.println("Email already registered.");
+        if (repository.obtenerUsuarioPorCorreo(
+                usuario.getCorreo()).isPresent()) {
+
+            throw new RuntimeException(
+                    "El correo ya está registrado.");
         }
 
-        repository.createUsuario(usuario);
+        usuario.setFechaRegistro(FechaUtil.ahora());
+
+        repository.crearUsuario(usuario);
     }
 
     @Override
-    public Usuario login(String email, String password) {
-        Usuario usuario = repository.getUsuarioByEmail(email);
+    public Usuario iniciarSesion(
+            String correo,
+            String contrasena) {
 
-        if (usuario != null && usuario.getContrasena().equals(password)) {
-            return usuario;
+        return repository.obtenerUsuarioPorCorreo(correo)
+                .filter(usuario ->
+                        Boolean.TRUE.equals(usuario.getActivo())
+                        && usuario.getContrasena().equals(contrasena))
+                .orElse(null);
+    }
+
+    @Override
+    public Optional<Usuario> obtenerUsuarioPorId(int idUsuario) {
+
+        return repository.obtenerUsuarioPorId(idUsuario);
+    }
+
+    @Override
+    public List<Usuario> listarUsuarios() {
+
+        return repository.listarUsuarios();
+    }
+
+    @Override
+    public boolean actualizarUsuario(Usuario usuario) {
+
+        boolean correoDeOtroUsuario =
+                repository.obtenerUsuarioPorCorreo(usuario.getCorreo())
+                        .filter(conMismoCorreo ->
+                                conMismoCorreo.getIdUsuario()
+                                        != usuario.getIdUsuario())
+                        .isPresent();
+
+        if (correoDeOtroUsuario) {
+
+            throw new RuntimeException(
+                    "El correo ya está registrado por otro usuario.");
         }
 
-        return null;
+        return repository.actualizarUsuario(usuario);
     }
 
     @Override
-    public Usuario getUsuarioById(int idUsuario) {
-        return repository.getUsuarioById(idUsuario);
-    }
+    public boolean eliminarUsuario(int idUsuario) {
 
-    @Override
-    public List<Usuario> getAllUsuarios() {
-        return repository.getAllUsuarios();
-    }
-
-    @Override
-    public boolean updateUsuario(Usuario usuario) {
-        return repository.updateUsuario(usuario);
-    }
-
-    @Override
-    public boolean deleteUsuario(int idUsuario) {
-        return repository.deleteUsuario(idUsuario);
-    }
-
-    @Override
-    public void sellProduct(int idUsuario) {
-        Usuario usuario = repository.getUsuarioById(idUsuario);
-        if (usuario != null) {
-            usuario.sellProduct();
-            repository.updateUsuario(usuario);
-        }
-    }
-
-    @Override
-    public void publishProduct(int idUsuario) {
-        Usuario usuario = repository.getUsuarioById(idUsuario);
-        if (usuario != null) {
-            usuario.publishProduct();
-            repository.updateUsuario(usuario);
-        }
-    }
-
-    @Override
-    public void buyProduct(int idUsuario) {
-        Usuario usuario = repository.getUsuarioById(idUsuario);
-        if (usuario != null) {
-            usuario.buyProduct();
-            repository.updateUsuario(usuario);
-        }
+        return repository.eliminarUsuario(idUsuario);
     }
 }

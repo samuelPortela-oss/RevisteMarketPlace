@@ -3,12 +3,17 @@ package app.service.inputports;
 import app.domain.Categoria;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CategoriaUseCase {
 
-    Categoria createCategoria(int idCategoria, String nombre, String descripcion);
-    Categoria getCategoriaById(int idCategoria);
-    List<Categoria> getAllCategorias();
-    Categoria updateCategoria(int idCategoria, String nombre, String descripcion);
-    void deleteCategoria(int idCategoria);
+    void crearCategoria(Categoria categoria);
+
+    Optional<Categoria> obtenerCategoriaPorId(int idCategoria);
+
+    List<Categoria> listarCategorias();
+
+    boolean actualizarCategoria(Categoria categoria);
+
+    boolean eliminarCategoria(int idCategoria);
 }

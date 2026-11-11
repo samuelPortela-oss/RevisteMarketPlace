@@ -8,75 +8,63 @@ import java.util.List;
 
 public class CategoriaView {
 
-    private final CategoriaUseCase categoriaService;
+    private CategoriaUseCase categoriaUseCase;
 
-    public CategoriaView(CategoriaUseCase categoriaUseCase) {
-        this.categoriaService = categoriaUseCase;
+    public CategoriaView(
+            CategoriaUseCase categoriaUseCase) {
+
+        this.categoriaUseCase = categoriaUseCase;
     }
 
-    public void createCategoria() {
-        System.out.println("Creando nueva categoría");
+    public Categoria leerCategoria() {
 
-        int idCategoria = FormRuleValidator.validateInt("Ingrese el id de la categoría");
+        Categoria categoria = new Categoria();
 
-        if (categoriaService.getCategoriaById(idCategoria) != null) {
-            System.out.println("Ya existe una categoría con el id " + idCategoria);
-            return;
-        }
+        categoria.setNombre(
+                FormRuleValidator.validateString(
+                        "Ingrese el nombre de la categoría:"));
 
-        String nombre = FormRuleValidator.validateString("Ingrese el nombre de la categoría");
-        String descripcion = FormRuleValidator.validateString("Ingrese una breve descripción de la categoría");
+        categoria.setDescripcion(
+                FormRuleValidator.validateString(
+                        "Ingrese la descripción de la categoría:"));
 
-        categoriaService.createCategoria(idCategoria, nombre, descripcion);
-        System.out.println("Categoría creada correctamente");
+        categoria.setActivo(true);
+
+        return categoria;
     }
 
-    public void getCategoriaById(int idCategoria) {
-        Categoria categoria = categoriaService.getCategoriaById(idCategoria);
+    public int leerIdCategoria() {
 
-        if (categoria == null) {
-            System.out.println("No se encontró una categoría con el id " + idCategoria);
-            return;
-        }
-
-        System.out.println(categoria.getIdCategoria() + " " + categoria.getNombre() + " " + categoria.getDescripcion());
+        return FormRuleValidator.validateInt(
+                "Ingrese el ID de la categoría:");
     }
 
-    public void getAllCategorias() {
-        List<Categoria> categorias = categoriaService.getAllCategorias();
+    public void mostrarCategoria(Categoria categoria) {
+
+        System.out.println(categoria);
+    }
+
+    public void mostrarCategorias(List<Categoria> categorias) {
 
         if (categorias.isEmpty()) {
-            System.out.println("Aún no hay categorías registradas");
+
+            System.out.println("No se encontraron categorías.");
             return;
         }
+
+        System.out.println("\n========== CATEGORÍAS ==========");
 
         for (Categoria categoria : categorias) {
-            System.out.println(categoria.getIdCategoria() + " " + categoria.getNombre() + " " + categoria.getDescripcion());
+
+            System.out.println("ID: " + categoria.getIdCategoria());
+            System.out.println("Nombre: " + categoria.getNombre());
+            System.out.println("Descripción: " + categoria.getDescripcion());
+            System.out.println("=====================");
         }
     }
 
-    public void updateCategoria() {
-        int idCategoria = FormRuleValidator.validateInt("Ingrese el id de la categoría a actualizar");
+    public void mostrarMensaje(String mensaje) {
 
-        if (categoriaService.getCategoriaById(idCategoria) == null) {
-            System.out.println("No se encontró una categoría con el id " + idCategoria);
-            return;
-        }
-
-        String nombre = FormRuleValidator.validateString("Ingrese el nuevo nombre de la categoría");
-        String descripcion = FormRuleValidator.validateString("Ingrese la nueva descripción de la categoría");
-
-        categoriaService.updateCategoria(idCategoria, nombre, descripcion);
-        System.out.println("Categoría actualizada correctamente");
-    }
-
-    public void deleteCategoria(int idCategoria) {
-        if (categoriaService.getCategoriaById(idCategoria) == null) {
-            System.out.println("No se encontró una categoría con el id " + idCategoria);
-            return;
-        }
-
-        categoriaService.deleteCategoria(idCategoria);
-        System.out.println("Categoría eliminada correctamente");
+        System.out.println(mensaje);
     }
 }

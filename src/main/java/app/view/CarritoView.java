@@ -1,83 +1,89 @@
 package app.view;
 
 import app.domain.Carrito;
-import app.domain.Producto;
+import app.domain.ItemCarrito;
 import app.service.inputports.CarritoUseCase;
+import app.utils.FormRuleValidator;
 
-import java.util.Scanner;
+import java.util.List;
 
 public class CarritoView {
-    private final CarritoUseCase carritoUseCase;
-    private final Scanner scanner;
 
-    public CarritoView(CarritoUseCase carritoUseCase) {
+    private CarritoUseCase carritoUseCase;
+
+    public CarritoView(
+            CarritoUseCase carritoUseCase) {
+
         this.carritoUseCase = carritoUseCase;
-        this.scanner = new Scanner(System.in);
     }
 
-    public void mostrarMenu() {
-        Long carritoId = 1L; // ID de carrito por defecto para la prueba
-        int opcion = 0;
+    public int leerIdUsuario() {
 
-        do {
-            System.out.println("\n--- MENÚ CARRITO DE COMPRAS ---");
-            System.out.println("1. Ver Carrito y Total");
-            System.out.println("2. Agregar Producto de Prueba");
-            System.out.println("3. Eliminar Producto");
-            System.out.println("4. Vaciar Carrito");
-            System.out.println("5. Salir");
-            System.out.print("Elige una opción: ");
+        return FormRuleValidator.validateInt(
+                "Ingrese el ID del usuario:");
+    }
 
-            if (scanner.hasNextInt()) {
-                opcion = scanner.nextInt();
-                scanner.nextLine(); // Limpiar buffer
-            } else {
-                scanner.nextLine();
-                opcion = 0;
-            }
+    public int leerIdPrenda() {
 
-            switch (opcion) {
-                case 1:
-                    Carrito carrito = carritoUseCase.obtenerCarrito(carritoId);
-                    System.out.println("\n--- TUS PRODUCTOS ---");
-                    if (carrito.getItems().isEmpty()) {
-                        System.out.println("El carrito está vacío.");
-                    } else {
-                        carrito.getItems().forEach(item ->
-                                System.out.println("- " + item.getProducto().getTitulo() +
-                                        " | Cantidad: " + item.getCantidad() +
-                                        " | Subtotal: $" + item.getSubtotal())
-                        );
-                        System.out.println("TOTAL A PAGAR: $" + carrito.getTotal());
-                    }
-                    break;
+        return FormRuleValidator.validateInt(
+                "Ingrese el ID de la prenda:");
+    }
 
-                case 2:
-                    // Creamos un producto de prueba estático para la demo
-                    Producto productoDemo = new Producto(101L, "Camiseta Oversize", 45000.0);
-                    carritoUseCase.agregarProductoAlCarrito(carritoId, productoDemo, 2);
-                    System.out.println("¡Producto agregado con éxito!");
-                    break;
+    public int leerCantidad() {
 
-                case 3:
-                    System.out.print("Ingresa el ID del producto a eliminar (ej. 101): ");
-                    Long prodId = scanner.nextLong();
-                    carritoUseCase.eliminarProductoDelCarrito(carritoId, prodId);
-                    System.out.println("Producto eliminado del carrito.");
-                    break;
+        return FormRuleValidator.validateInt(
+                "Ingrese la cantidad:");
+    }
 
-                case 4:
-                    carritoUseCase.vaciarCarrito(carritoId);
-                    System.out.println("Se ha vaciado el carrito.");
-                    break;
+    public int leerIdItemCarrito() {
 
-                case 5:
-                    System.out.println("Saliendo del módulo de carrito...");
-                    break;
+        return FormRuleValidator.validateInt(
+                "Ingrese el ID del item del carrito:");
+    }
 
-                default:
-                    System.out.println("Opción no válida. Intenta de nuevo.");
-            }
-        } while (opcion != 5);
+    public int leerIdCarrito() {
+
+        return FormRuleValidator.validateInt(
+                "Ingrese el ID del carrito:");
+    }
+
+    public void mostrarCarrito(Carrito carrito) {
+
+        if (carrito == null) {
+
+            System.out.println("El usuario no tiene carrito.");
+            return;
+        }
+
+        System.out.println("\n========== CARRITO ==========");
+        System.out.println("ID carrito: " + carrito.getIdCarrito());
+        System.out.println("ID usuario: " + carrito.getIdUsuario());
+
+        List<ItemCarrito> items =
+                carritoUseCase.listarItemsPorCarrito(
+                        carrito.getIdCarrito());
+
+        if (items.isEmpty()) {
+
+            System.out.println("El carrito está vacío.");
+            return;
+        }
+
+        for (ItemCarrito item : items) {
+
+            System.out.println("ID item: " + item.getIdItemCarrito()
+                    + " | ID prenda: " + item.getIdPrenda()
+                    + " | Cantidad: " + item.getCantidad());
+        }
+
+        System.out.println("Total: "
+                + carritoUseCase.calcularTotalCarrito(
+                carrito.getIdCarrito()));
+        System.out.println("=====================");
+    }
+
+    public void mostrarMensaje(String mensaje) {
+
+        System.out.println(mensaje);
     }
 }

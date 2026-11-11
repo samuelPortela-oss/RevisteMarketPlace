@@ -1,46 +1,29 @@
 package app.domain;
 
-import java.util.Date;
-
 public class Usuario {
 
     private int idUsuario;
     private String nombre;
     private String correo;
     private String contrasena;
-    private String celular;
+    private String telefono;
     private String direccion;
     private String fechaRegistro;
-    private String estado;
-
-    // Seller attributes
-    private String calificacion;
-    private int numeroVentas;
-    private int productosPublicados;
-
-    // Buyer attributes
-    private int comprasRealizadas;
-    private String listaDeseos;
-    private String metodoPago;
+    private Boolean activo;
 
     public Usuario() {
     }
 
-    public Usuario(int idUsuario, String nombre, String correo, String contrasena, String celular, String direccion, String fechaRegistro, String estado) {
+    public Usuario(int idUsuario, String nombre, String correo, String contrasena,
+                   String telefono, String direccion, String fechaRegistro, Boolean activo) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.correo = correo;
         this.contrasena = contrasena;
-        this.celular = celular;
+        this.telefono = telefono;
         this.direccion = direccion;
         this.fechaRegistro = fechaRegistro;
-        this.estado = estado;
-        this.calificacion = "0.0";
-        this.numeroVentas = 0;
-        this.productosPublicados = 0;
-        this.comprasRealizadas = 0;
-        this.listaDeseos = "";
-        this.metodoPago = "";
+        this.activo = activo;
     }
 
     public int getIdUsuario() {
@@ -75,12 +58,12 @@ public class Usuario {
         this.contrasena = contrasena;
     }
 
-    public String getCelular() {
-        return celular;
+    public String getTelefono() {
+        return telefono;
     }
 
-    public void setCelular(String celular) {
-        this.celular = celular;
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
     public String getDireccion() {
@@ -99,75 +82,12 @@ public class Usuario {
         this.fechaRegistro = fechaRegistro;
     }
 
-    public String getEstado() {
-        return estado;
+    public Boolean getActivo() {
+        return activo;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public String getCalificacion() {
-        return calificacion;
-    }
-
-    public void setCalificacion(String calificacion) {
-        this.calificacion = calificacion;
-    }
-
-    public int getNumeroVentas() {
-        return numeroVentas;
-    }
-
-    public void setNumeroVentas(int numeroVentas) {
-        this.numeroVentas = numeroVentas;
-    }
-
-    public int getProductosPublicados() {
-        return productosPublicados;
-    }
-
-    public void setProductosPublicados(int productosPublicados) {
-        this.productosPublicados = productosPublicados;
-    }
-
-    public int getComprasRealizadas() {
-        return comprasRealizadas;
-    }
-
-    public void setComprasRealizadas(int comprasRealizadas) {
-        this.comprasRealizadas = comprasRealizadas;
-    }
-
-    public String getListaDeseos() {
-        return listaDeseos;
-    }
-
-    public void setListaDeseos(String listaDeseos) {
-        this.listaDeseos = listaDeseos;
-    }
-
-    public String getMetodoPago() {
-        return metodoPago;
-    }
-
-    public void setMetodoPago(String metodoPago) {
-        this.metodoPago = metodoPago;
-    }
-
-    public void sellProduct() {
-        this.numeroVentas++;
-    }
-
-    public void publishProduct() {
-        this.productosPublicados++;
-    }
-
-    public void buyProduct() {
-        this.comprasRealizadas++;
-    }
-
-    public void addToWishlist() {
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 
     @Override
@@ -176,17 +96,10 @@ public class Usuario {
                 "idUsuario=" + idUsuario +
                 ", nombre='" + nombre + '\'' +
                 ", correo='" + correo + '\'' +
-                ", contrasena='" + contrasena + '\'' +
-                ", celular='" + celular + '\'' +
+                ", telefono='" + telefono + '\'' +
                 ", direccion='" + direccion + '\'' +
                 ", fechaRegistro='" + fechaRegistro + '\'' +
-                ", estado='" + estado + '\'' +
-                ", calificacion='" + calificacion + '\'' +
-                ", numeroVentas=" + numeroVentas +
-                ", productosPublicados=" + productosPublicados +
-                ", comprasRealizadas=" + comprasRealizadas +
-                ", listaDeseos='" + listaDeseos + '\'' +
-                ", metodoPago='" + metodoPago + '\'' +
+                ", activo=" + activo +
                 '}';
     }
 }
